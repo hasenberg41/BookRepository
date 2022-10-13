@@ -1,6 +1,6 @@
 class Api::V1::BooksController < ApplicationController
   def index
-    render json: Book.all
+    render json: BooksRepresenter.new(Book.all).as_json
   end
 
   def create
