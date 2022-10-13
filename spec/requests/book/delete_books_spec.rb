@@ -11,5 +11,12 @@ RSpec.describe 'Books', type: :request do
     it "Returns the status code 204" do
       expect(response).to have_http_status(204)
     end
+
+    it "Should deleted some book" do
+      deleted_book = FactoryBot.create(:book)
+      expect {
+        delete "/api/v1/books/#{deleted_book.id}"
+      }.to change { Book.count }.from(1).to(0)
+    end
   end
 end
