@@ -16,7 +16,7 @@ class Api::V1::BooksController < ApplicationController
   def destroy
     Book.find(params[:id]).destroy!
 
-    head :ok
+    head :no_content
   end
 
   private
