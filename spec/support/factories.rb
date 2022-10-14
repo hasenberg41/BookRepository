@@ -10,4 +10,8 @@ FactoryBot.define do
     title { Faker::Lorem.sentence[0..50] }
     description { Faker::Lorem.paragraph[0..500] }
   end
+
+  factory :user do
+    username { Faker::Name.first_name }
+  end
 end
