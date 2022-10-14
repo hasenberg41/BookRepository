@@ -7,7 +7,7 @@ FactoryBot.define do
   end
 
   factory :book do
-    title { Faker::Lorem.sentence }
-    description { Faker::Lorem.paragraph }
+    title { Faker::Lorem.sentence[0..50] }
+    description { Faker::Lorem.paragraph[0..500] }
   end
 end

@@ -1,6 +1,9 @@
 class Api::V1::BooksController < ApplicationController
+  MAX_PAGINATION_LIMIT = 100
+
   def index
-    render json: BooksRepresenter.new(Book.all).as_json
+    books = Book.limit(limit).offset(params[:offset])
+    render json: BooksRepresenter.new(books).as_json
   end
 
   def create
@@ -21,6 +24,13 @@ class Api::V1::BooksController < ApplicationController
   end
 
   private
+
+  def limit
+    [
+      params.fetch(:limit, MAX_PAGINATION_LIMIT).to_i,
+      MAX_PAGINATION_LIMIT
+    ].min
+  end
 
   def book_params
     params.require(:book).permit(:title, :description)
