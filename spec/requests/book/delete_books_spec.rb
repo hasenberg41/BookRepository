@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe 'Books', type: :request do
   describe "DELETE /destroy" do
-    let!(:book) { FactoryBot.create(:book) }
+    let!(:author) { FactoryBot.create(:author) }
+    let!(:book) { FactoryBot.create(:book, author: author) }
 
     before do
       delete "/api/v1/books/#{book.id}"
@@ -17,7 +18,7 @@ RSpec.describe 'Books', type: :request do
     end
 
     it "Should deleted some book" do
-      deleted_book = FactoryBot.create(:book)
+      deleted_book = FactoryBot.create(:book, author: author)
       expect {
         delete "/api/v1/books/#{deleted_book.id}"
       }.to change { Book.count }.from(1).to(0)

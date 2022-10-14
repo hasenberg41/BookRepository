@@ -3,9 +3,9 @@ require 'rails_helper'
 RSpec.describe 'Books', type: :request do
   describe 'POST /create' do
 
-    it "create a new book" do
+    it "creating a new book" do
       author = FactoryBot.build(:author)
-      book = FactoryBot.build(:book)
+      book = FactoryBot.build(:book, author: author)
       expect {
         post '/api/v1/books', params: {
           book: {
@@ -20,11 +20,12 @@ RSpec.describe 'Books', type: :request do
         }
       }.to change { Book.count }.from(0).to(1)
 
-      expect(Author.count > 0)
+      expect(Author.count).to eq(1)
     end
 
-    context 'with valid parameters' do
-      let!(:test_book) { FactoryBot.create(:book) }
+    context 'should book saved with valid parameters' do
+      let!(:test_author) { FactoryBot.create(:author) }
+      let!(:test_book) { FactoryBot.create(:book, author: test_author) }
 
       before do
         author = test_book.author

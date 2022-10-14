@@ -3,7 +3,11 @@ require 'rails_helper'
 RSpec.describe 'Books', type: :request do
   describe 'GET /index' do
     before do
-      FactoryBot.create_list(:book, 10)
+      author = FactoryBot.create(:author)
+      FactoryBot.build_list(:book, 10) do |book|
+        book.author = author
+        book.save!
+      end
       get '/api/v1/books'
     end
 

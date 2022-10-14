@@ -9,6 +9,5 @@ FactoryBot.define do
   factory :book do
     title { Faker::Lorem.sentence }
     description { Faker::Lorem.paragraph }
-    author_id { FactoryBot.create(:author).id }
   end
 end
