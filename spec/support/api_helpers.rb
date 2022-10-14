@@ -3,7 +3,8 @@ module ApiHelpers
     JSON.parse(response.body)
   end
 
-  def author_of(book)
-    book.author
+  def author_from_response
+    f_name, l_name = json["author_name"].split
+    Author.find_by(first_name: f_name, last_name: l_name)
   end
 end

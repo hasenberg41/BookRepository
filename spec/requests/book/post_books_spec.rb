@@ -27,7 +27,7 @@ RSpec.describe 'Books', type: :request do
       let!(:test_book) { FactoryBot.create(:book) }
 
       before do
-        author = author_of(test_book)
+        author = test_book.author
 
         post '/api/v1/books', params: {
           book: {
@@ -50,9 +50,8 @@ RSpec.describe 'Books', type: :request do
         expect(test_book.description).to eq(json['description'])
       end
 
-      it 'returns author' do
-        author = Author.find(json['author_id'])
-        expect(author_of(test_book)).to eq(author)
+      it 'returns correct author' do
+        expect(test_book.author).to eq(author_from_response)
       end
 
       it 'returns a created status' do

@@ -1,6 +1,6 @@
 class BooksRepresenter
-  def initialize(books)
-    @books = books
+  def initialize(book)
+    @books = book
   end
 
   def as_json
