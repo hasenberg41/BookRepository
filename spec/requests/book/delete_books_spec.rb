@@ -12,6 +12,10 @@ RSpec.describe 'Books', type: :request do
       expect(response).to have_http_status(204)
     end
 
+    it "Authors should be a save in database" do
+      expect(Author.count).to_not eq(0)
+    end
+
     it "Should deleted some book" do
       deleted_book = FactoryBot.create(:book)
       expect {
