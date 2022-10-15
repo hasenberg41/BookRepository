@@ -5,12 +5,12 @@ describe AuthenticationTokenService do
   let(:token) { described_class.call(user.id) }
 
   describe '.call' do
-
     it 'returns an authentication token' do
-      decoded_token = JWT.decode token, described_class::HMAC_SECRET, true,
-        { algorithm: described_class::ALGORITHM_TYPE }
+      decoded_token = JWT.decode token, described_class.secret_key, true, {
+        algorithm: described_class::ALGORITHM_TYPE
+      }
 
-      expect(decoded_token).to eq([{"user_id"=>user.id}, {"alg"=>"HS256"}])
+      expect(decoded_token).to eq([{ 'user_id' => user.id }, { 'alg' => described_class::ALGORITHM_TYPE }])
     end
   end
 

@@ -1,5 +1,4 @@
 FactoryBot.define do
-
   factory :author do
     first_name { Faker::Name.first_name }
     last_name { Faker::Name.last_name }
@@ -13,6 +12,6 @@ FactoryBot.define do
 
   factory :user do
     username { Faker::Name.first_name }
-    password { ('a'..'z').to_a.union((1..9).to_a).shuffle[0..9].join }
+    password { ('a'..'z').to_a.union((1..9).to_a).sample(9).join }
   end
 end

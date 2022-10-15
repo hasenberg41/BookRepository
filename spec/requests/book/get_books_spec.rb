@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe 'Books', type: :request do
-  BOOKS_COUNT = 300
+BOOKS_COUNT = 300
 
+RSpec.describe 'Books', type: :request do
   describe 'GET /index' do
     let!(:author) { FactoryBot.create(:author) }
     let!(:books) do
