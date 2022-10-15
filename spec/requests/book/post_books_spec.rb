@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.describe 'Books', type: :request do
   describe 'POST /create' do
+    let(:user) { FactoryBot.create(:user) }
+    let(:token) { AuthenticationTokenService.call(user.id) }
 
     it "creating a new book" do
       author = FactoryBot.build(:author)
@@ -17,19 +19,17 @@ RSpec.describe 'Books', type: :request do
             last_name: author.last_name,
             age: author.age
           }
-        }
+        }, headers: { "Authorization" => "Token #{token}" }
       }.to change { Book.count }.from(0).to(1)
 
       expect(Author.count).to eq(1)
     end
 
     context 'should book saved with valid parameters' do
-      let!(:test_author) { FactoryBot.create(:author) }
-      let!(:test_book) { FactoryBot.create(:book, author: test_author) }
+      let!(:author) { FactoryBot.create(:author) }
+      let!(:test_book) { FactoryBot.create(:book, author: author) }
 
       before do
-        author = test_book.author
-
         post '/api/v1/books', params: {
           book: {
             title: test_book.title,
@@ -40,7 +40,7 @@ RSpec.describe 'Books', type: :request do
             last_name: author.last_name,
             age: author.age
           }
-        }
+        }, headers: { "Authorization" => "Token #{token}" }
       end
 
       it 'returns the title' do
@@ -72,7 +72,7 @@ RSpec.describe 'Books', type: :request do
             last_name: '',
             age: 0
           }
-        }
+        }, headers: { "Authorization" => "Token #{token}" }
       end
 
       it 'returns a unprocessable entity status' do

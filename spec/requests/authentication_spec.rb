@@ -32,4 +32,27 @@ describe 'Authentication', type: :request do
       expect(response).to have_http_status(:unauthorized)
     end
   end
+
+  describe "Books controller specs, when token is incorrect" do
+    let(:incorrect_token) { AuthenticationTokenService.call(rand(10..99)) }
+    it "POST /books should return status code 401" do
+      author = FactoryBot.build(:author)
+      book = FactoryBot.build(:book, author: author)
+
+      post '/api/v1/books', params: {
+        book: {
+          title: book.title,
+          description: book.description
+        },
+        author: {
+          first_name: author.first_name,
+          last_name: author.last_name,
+          age: author.age
+        }
+      }, headers: { "Authorization" => "Token #{incorrect_token}" }
+
+      expect(response).to have_http_status(:unauthorized)
+    end
+
+  end
 end
