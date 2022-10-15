@@ -1,24 +1,19 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# This is a Rails JSON API - Book repository
 
-Things you may want to cover:
+Project propertyes:
 
-* Ruby version
+* Ruby version - 3.1.2
 
-* System dependencies
+* Rails version - 7.0.4
 
-* Configuration
+Configuration:
 
-* Database creation
+* Database on deployment - Postgresql
 
-* Database initialization
+* Database on development and testing - Sqlite3
 
-* How to run the test suite
+* Database initialization by default with a 10 books and 5 authors of these (in the future)
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* Authentificate was maked with JWT tokens
