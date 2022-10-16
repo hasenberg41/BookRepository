@@ -18,6 +18,6 @@ class AuthenticationTokenService
   end
 
   def self.secret_key
-    Rails.application.secrets.secret_key_base.to_s
+    Rails.application.credentials.secret_key_base.to_s
   end
 end
