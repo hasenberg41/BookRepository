@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :books, only: %i[create index destroy]
 
+      post 'registration', to: 'users#create'
       post 'authenticate', to: 'authentication#create'
     end
   end
