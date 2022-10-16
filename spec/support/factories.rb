@@ -8,10 +8,11 @@ FactoryBot.define do
   factory :book do
     title { Faker::Lorem.sentence[0..50] }
     description { Faker::Lorem.paragraph[0..500] }
+    path { Faker::Internet.url }
   end
 
   factory :user do
-    username { Faker::Name.first_name }
+    username { Faker::Name.name }
     password { ('a'..'z').to_a.union((1..9).to_a).sample(9).join }
   end
 end

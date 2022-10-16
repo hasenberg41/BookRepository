@@ -2,8 +2,9 @@ require 'rails_helper'
 
 RSpec.describe Book, type: :model do
   describe 'validations' do
-    let!(:author) { FactoryBot.create(:author) }
-    let!(:book) { FactoryBot.create(:book, 'author' => author) }
+    let(:user) { FactoryBot.create(:user) }
+    let(:author) { FactoryBot.create(:author, 'user' => user) }
+    let!(:book) { FactoryBot.create(:book, 'author' => author, 'user' => user) }
 
     it 'is valid with valid attributes' do
       expect(book.valid?).to eq(true)

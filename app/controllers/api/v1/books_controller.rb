@@ -11,10 +11,10 @@ class Api::V1::BooksController < ApplicationController
 
   def create
     author = Author.find_or_create_by(author_params)
-    book = Book.new(book_params.merge(author_id: author.id))
+    book = Book.new(book_params.merge(author_id: author.id, user_id: @user_id))
 
     if book.save
-      render json: BookRepresenter.new(book).as_json, status: :created
+      pp render json: BookRepresenter.new(book).as_json, status: :created
     else
       render json: book.errors.full_messages, status: :unprocessable_entity
     end
@@ -30,8 +30,8 @@ class Api::V1::BooksController < ApplicationController
 
   def authenticate
     token, _options = token_and_options(request)
-    user_id = AuthenticationTokenService.decode(token)
-    User.find(user_id)
+    @user_id = AuthenticationTokenService.decode(token)
+    User.find(@user_id)
   rescue ActiveRecord::RecordNotFound
     render status: :unauthorized
   end
@@ -44,10 +44,12 @@ class Api::V1::BooksController < ApplicationController
   end
 
   def book_params
-    params.require(:book).permit(:title, :description)
+    params.require(:book).permit(:title, :description, :path)
   end
 
   def author_params
-    params.require(:author).permit(:first_name, :last_name, :age)
+    params_hash = params.require(:author).permit(:first_name, :last_name, :age).to_h
+    params_hash[:user_id] = @user_id
+    params_hash
   end
 end

@@ -8,3 +8,6 @@ Style/FrozenStringLiteralComment:
 
 Style/ClassAndModuleChildren:
   Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false

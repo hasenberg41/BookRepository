@@ -1,23 +1,17 @@
+require 'book_helper'
+
 class BookRepresenter
+  include BookHelper
+
   def initialize(book)
     @book = book
   end
 
   def as_json
-    {
-      id: book.id,
-      title: book.title,
-      description: book.description,
-      author_name: author_name(book),
-      author_age: book.author.age
-    }
+    json(book)
   end
 
   private
 
   attr_reader :book
-
-  def author_name(book)
-    "#{book.author.first_name} #{book.author.last_name}"
-  end
 end

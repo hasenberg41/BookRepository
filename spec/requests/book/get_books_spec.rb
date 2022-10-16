@@ -4,10 +4,12 @@ BOOKS_COUNT = 300
 
 RSpec.describe 'Books', type: :request do
   describe 'GET /index' do
-    let!(:author) { FactoryBot.create(:author) }
+    let(:user) { FactoryBot.create(:user) }
+    let(:author) { FactoryBot.create(:author, 'user' => user) }
     let!(:books) do
       FactoryBot.build_list(:book, BOOKS_COUNT) do |book|
         book.author = author
+        book.user = user
         book.save!
       end
     end

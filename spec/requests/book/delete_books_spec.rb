@@ -2,13 +2,13 @@ require 'rails_helper'
 
 RSpec.describe 'Books', type: :request do
   describe 'DELETE /destroy' do
-    let!(:author) { FactoryBot.create(:author) }
-    let!(:book) { FactoryBot.create(:book, 'author' => author) }
+    let(:user) { FactoryBot.create(:user) }
+    let(:token) { AuthenticationTokenService.call(user.id) }
+    let(:author) { FactoryBot.create(:author, 'user' => user) }
+    let!(:book) { FactoryBot.create(:book, 'author' => author, 'user' => user) }
 
     before do
-      user = FactoryBot.create(:user)
-      @token = AuthenticationTokenService.call(user.id)
-      delete "/api/v1/books/#{book.id}", headers: { 'Authorization' => "Token #{@token}" }
+      delete "/api/v1/books/#{book.id}", headers: { 'Authorization' => "Token #{token}" }
     end
 
     it 'Returns the status code 204' do
@@ -21,10 +21,10 @@ RSpec.describe 'Books', type: :request do
     end
 
     it 'Should deleted some book' do
-      deleted_book = FactoryBot.create(:book, 'author' => author)
+      deleted_book = FactoryBot.create(:book, 'author' => author, 'user' => user)
       expect do
         delete "/api/v1/books/#{deleted_book.id}", headers:
-          { 'Authorization' => "Token #{@token}" }
+          { 'Authorization' => "Token #{token}" }
       end.to change { Book.count }.from(1).to(0)
     end
   end
