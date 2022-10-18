@@ -4,10 +4,10 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    Hi <%= @user.name %>,
+    Hi <%= @user.username %>,
 
     Thanks for registering! To confirm your registration click the URL below.
 
-    <%= confirm_email_user_url(@user.confirm_token) %>
+    <%= api_v1_registration_confirm_url(@user.confirm_token) %>
   </body>
 </html>

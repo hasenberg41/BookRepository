@@ -1,4 +1,3 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: ENV['EMAIL_ADDRESS']
-  layout "mailer"
+  layout 'mailer'
 end
