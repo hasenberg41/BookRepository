@@ -1,8 +1,9 @@
 class Api::V1::UsersController < ApplicationController
   def create
     user = User.new(user_params)
+
     if user.save
-      UserMailer.registration_confirmation(user).deliver_later
+      send_confirmation_email(user)
       render status: :created
     else
       render status: :unprocessable_entity
@@ -10,13 +11,34 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def confirm_email
-    debugger
-    user = User.find_by()
+    user = User.find_by(confirm_token: params[:format])
+    if user
+      user.email_confirmed = true
+      user.confirm_token = nil
+      user.save!
+
+      render status: :ok
+    else
+      render status: :not_found
+    end
+  end
+
+  def send_confirmation
+    user = User.find(params[:id])
+
+    render status: :ok
+    send_confirmation_email(user)
+  rescue ActiveRecord::RecordNotFound
+    render status: :not_found
   end
 
   private
 
   def user_params
     params.require(:user).permit(:username, :email, :password)
+  end
+
+  def send_confirmation_email(user)
+    UserMailer.registration_confirmation(user).deliver_later
   end
 end

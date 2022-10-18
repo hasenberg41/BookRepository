@@ -7,7 +7,8 @@ Rails.application.routes.draw do
       resources :books, only: %i[create index destroy]
 
       post 'registration', to: 'users#create'
-      get 'registration/confirm', to: 'users#confirm_email'
+      post 'registration/confirm', to: 'users#confirm_email'
+      get 'registration/confirm', to: 'users#send_confirmation'
 
       post 'authenticate', to: 'authentication#create'
     end

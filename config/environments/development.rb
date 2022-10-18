@@ -38,7 +38,7 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
-  config.action_mailer.delivery_method = :test
+  config.action_mailer.delivery_method = :smtp
 
   email_address = ENV['EMAIL_ADDRESS'].to_s
 
