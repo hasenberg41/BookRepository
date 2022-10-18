@@ -14,7 +14,7 @@ class Api::V1::BooksController < ApplicationController
     book = Book.new(book_params.merge(author_id: author.id, user_id: @user_id))
 
     if book.save
-      pp render json: BookRepresenter.new(book).as_json, status: :created
+      render json: BookRepresenter.new(book).as_json, status: :created
     else
       render json: book.errors.full_messages, status: :unprocessable_entity
     end
