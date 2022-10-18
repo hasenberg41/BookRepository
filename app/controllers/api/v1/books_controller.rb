@@ -31,7 +31,13 @@ class Api::V1::BooksController < ApplicationController
   def authenticate
     token, _options = token_and_options(request)
     @user_id = AuthenticationTokenService.decode(token)
-    User.find(@user_id)
+    user = User.find(@user_id)
+
+    if user.email_confirmed
+      user
+    else
+      render json: { message: 'You need to verify your email to get access.' }, status: :unauthorized
+    end
   rescue ActiveRecord::RecordNotFound
     render status: :unauthorized
   end
