@@ -31,25 +31,25 @@ RSpec.describe 'Users', type: :request do
     let!(:user) { FactoryBot.create(:user) }
 
     it 'returns http status :ok' do
-      post '/api/v1/registration/confirm', params: { format: user.confirm_token }
+      get '/api/v1/registration/confirm', params: { format: user.confirm_token }
 
       expect(response).to have_http_status(:ok)
     end
 
     it 'returns http status :not_found' do
-      post '/api/v1/registration/confirm', params: { format: 'incorrect_token' }
+      get '/api/v1/registration/confirm', params: { format: 'incorrect_token' }
 
       expect(response).to have_http_status(:not_found)
     end
 
     it 'user email must be confirmed when token correct' do
-      post '/api/v1/registration/confirm', params: { format: user.confirm_token }
+      get '/api/v1/registration/confirm', params: { format: user.confirm_token }
 
       expect(User.find(user.id).email_confirmed).to eq(true)
     end
 
     it 'user email must be confirmed when token incorrect' do
-      post '/api/v1/registration/confirm', params: { format: 'incorrect_token' }
+      get '/api/v1/registration/confirm', params: { format: 'incorrect_token' }
 
       expect(User.find(user.id).email_confirmed).to eq(false)
     end
@@ -59,13 +59,13 @@ RSpec.describe 'Users', type: :request do
     let(:user) { FactoryBot.create(:user) }
 
     it 'returns status :ok if user exist' do
-      get '/api/v1/registration/confirm', params: { id: user.id }
+      post '/api/v1/registration/confirm', params: { id: user.id }
 
       expect(response).to have_http_status(:ok)
     end
 
     it 'returns status :not_found if user dousnt exist' do
-      get '/api/v1/registration/confirm', params: { id: rand(10_000) }
+      post '/api/v1/registration/confirm', params: { id: rand(10_000) }
 
       expect(response).to have_http_status(:not_found)
     end
