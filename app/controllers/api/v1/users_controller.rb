@@ -4,7 +4,7 @@ class Api::V1::UsersController < ApplicationController
 
     if user.save
       send_confirmation_email(user)
-      render status: :created
+      render json: { user_id: user.id }, status: :created
     else
       render status: :unprocessable_entity
     end

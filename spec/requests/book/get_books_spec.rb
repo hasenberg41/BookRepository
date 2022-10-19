@@ -24,12 +24,29 @@ RSpec.describe 'Books', type: :request do
       expect(json.size).to eq(max_pagination_limit)
     end
 
-    it 'returns one correct book based on limit' do
-      get '/api/v1/books', params: { limit: 1 }
-      expect(json.size).to eq(1)
+    it 'returns one correct books based on random limit' do
+      limit = rand(1..100)
+      get '/api/v1/books', params: { limit: limit }
+      expect(json.size).to eq(limit)
 
-      book_like_responce = BookRepresenter.new(books[0]).as_json
-      expect(json[0].to_json).to eq(book_like_responce.to_json)
+      (0..(limit - 1)).each do |i|
+        book_like_responce = BookRepresenter.new(books[i]).as_json
+        expect(json[i].to_json).to eq(book_like_responce.to_json)
+      end
+    end
+
+    it 'returns correct json of book' do
+      get '/api/v1/books', params: { limit: 1 }
+
+      expect(json.first.to_json).to eq({
+        id: books.first.id,
+        title: books.first.title,
+        description: books.first.description,
+        path_url: books.first.path,
+        author_name: "#{books.first.author.first_name} #{books.first.author.last_name}",
+        author_age: books.first.author.age,
+        user_creator: books.first.user.username
+      }.to_json)
     end
 
     it 'returns status code 200' do

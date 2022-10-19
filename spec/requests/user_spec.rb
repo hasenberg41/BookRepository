@@ -15,6 +15,17 @@ RSpec.describe 'Users', type: :request do
       expect(response).to have_http_status(:created)
     end
 
+    it 'returns user id' do
+      post '/api/v1/registration', params: {
+        user: {
+          email: user.email,
+          username: user.username,
+          password: ('a'..'z').to_a.union((1..9).to_a).sample(9).join
+        }
+      }
+      expect(json).to eq({ 'user_id' => User.find_by(email: user.email).id })
+    end
+
     it 'returns http :unprocessable_entity (422)' do
       post '/api/v1/registration', params: {
         user: {
