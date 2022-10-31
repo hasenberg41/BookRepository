@@ -10,37 +10,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_18_130009) do
-  create_table "authors", force: :cascade do |t|
-    t.string "first_name"
-    t.string "last_name"
-    t.integer "age"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "user_id"
-    t.index ["user_id"], name: "index_authors_on_user_id"
+ActiveRecord::Schema[7.0].define(version: 20_221_018_130_009) do
+  create_table 'authors', force: :cascade do |t|
+    t.string 'first_name'
+    t.string 'last_name'
+    t.integer 'age'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.integer 'user_id'
+    t.index ['user_id'], name: 'index_authors_on_user_id'
   end
 
-  create_table "books", force: :cascade do |t|
-    t.string "title"
-    t.text "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "author_id"
-    t.integer "user_id"
-    t.string "path"
-    t.index ["author_id"], name: "index_books_on_author_id"
-    t.index ["user_id"], name: "index_books_on_user_id"
+  create_table 'books', force: :cascade do |t|
+    t.string 'title'
+    t.text 'description'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.integer 'author_id'
+    t.integer 'user_id'
+    t.string 'path'
+    t.index ['author_id'], name: 'index_books_on_author_id'
+    t.index ['user_id'], name: 'index_books_on_user_id'
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string "username"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "password_digest"
-    t.string "email"
-    t.boolean "email_confirmed", default: false
-    t.string "confirm_token"
+  create_table 'users', force: :cascade do |t|
+    t.string 'username'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.string 'password_digest'
+    t.string 'email'
+    t.boolean 'email_confirmed', default: false
+    t.string 'confirm_token'
   end
-
 end

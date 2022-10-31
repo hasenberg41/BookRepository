@@ -26,7 +26,7 @@ RSpec.describe 'Books', type: :request do
 
     it 'returns one correct books based on random limit' do
       limit = rand(1..100)
-      get '/api/v1/books', params: { limit: limit }
+      get '/api/v1/books', params: { limit: }
       expect(json.size).to eq(limit)
 
       (0..(limit - 1)).each do |i|
